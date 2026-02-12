@@ -41,11 +41,22 @@ GC is an automatic memory management feature. It frees up memory occupied by obj
 - **Interface**: Only defines method signatures (contracts). A class can implement **multiple** interfaces. Used for de-coupling code (DI).
 - **Abstract Class**: Can have implementation details and abstract methods. A class can inherit only **one** abstract class. Used for sharing common logic.
 
+### Q6: What is LINQ?
+
+Language Integrated Query. It allows you to write SQL-like queries directly in C# code to manipulate collections, arrays, and databases.
+
+- _Key Feature:_ **Deferred Execution** (The query is not executed until you iterate over the result, e.g., using `.ToList()`).
+
+### Q7: Delegates vs Events?
+
+- **Delegate**: A type-safe function pointer. It holds a reference to a method.
+- **Event**: A wrapper around a delegate. It allows a class to notify other classes when something happens (Publisher-Subscriber model).
+
 ---
 
 ## 2. ASP.NET Core Web API
 
-### Q6: What are the HTTP Verbs?
+### Q8: What are the HTTP Verbs?
 
 - **GET**: Retrieve data.
 - **POST**: Create new data.
@@ -53,7 +64,7 @@ GC is an automatic memory management feature. It frees up memory occupied by obj
 - **PATCH**: Partially update data.
 - **DELETE**: Remove data.
 
-### Q7: Common HTTP Status Codes?
+### Q9: Common HTTP Status Codes?
 
 - **200 OK**: Success.
 - **201 Created**: Resource created successfully.
@@ -63,17 +74,22 @@ GC is an automatic memory management feature. It frees up memory occupied by obj
 - **404 Not Found**: Resource doesn't exist.
 - **500 Internal Server Error**: Server crashed/Exception.
 
-### Q8: What is Dependency Injection (DI) Lifetimes?
+### Q10: What is Dependency Injection (DI) Lifetimes?
 
 1.  **Transient**: Created **every time** it is requested. Lightweight services.
 2.  **Scoped**: Created **once per HTTP request**. Used for DbContext (User A's request gets one instance, User B gets another).
 3.  **Singleton**: Created **once for the application lifetime**. Shared by all requests.
 
+### Q11: Middleware vs Filters?
+
+- **Middleware**: Components that handle the request logic **before** it reaches the Controller (e.g., Authentication, Logging). It runs for _every_ request.
+- **Filters**: Run **after** the request reaches the Controller but before the Action Method (e.g., Validation, caching). Specific to Controllers/Actions.
+
 ---
 
 ## 3. SQL Server (Database)
 
-### Q9: What is Normalization?
+### Q12: What is Normalization?
 
 The process of organizing data to reduce redundancy (duplication).
 
@@ -81,30 +97,53 @@ The process of organizing data to reduce redundancy (duplication).
 - **2NF**: No partial dependency (all columns depend on Primary Key).
 - **3NF**: No transitive dependency (non-key columns don't depend on other non-key columns).
 
-### Q10: What are Joins?
+### Q13: What are Joins?
 
 - **INNER JOIN**: Returns matching rows from both tables.
 - **LEFT JOIN**: Returns all rows from Left table + matching from Right (NULL if no match).
 - **RIGHT JOIN**: Returns all rows from Right table + matching from Left.
 - **FULL JOIN**: Returns everything (matches + non-matches from both sides).
 
- ++++++++++++++++++++++++++### Q11: Diff between `Stored Procedure` and `View`?
+### Q14: Diff between `Stored Procedure` and `View`?
 
 - **Stored Procedure**: Can have logic (IF/ELSE, LOOPS), accept parameters, and modify data (INSERT/UPDATE). Pre-compiled for performance.
 - **View**: A "Virtual Table" saved as a query. Read-only by default. Used to simplify complex SELECT queries for reporting.
 
-### Q12: What is an Index?
+### Q15: What is an Index?
 
 A structure that speeds up data retrieval (like a book index).
 
 - **Clustered Index**: Sorts the actual data rows (Only 1 per table, usually PK).
 - **Non-Clustered Index**: A separate structure pointing to data rows (Can have multiple).
 
+### Q16: DELETE vs TRUNCATE?
+
+- **DELETE**: Removes rows one by one. Can be rolled back. Slower. Triggers are fired.
+- **TRUNCATE**: Removes all pages (faster). Cannot be rolled back (in some contexts). Resets Identity counter. No triggers fired.
+
+### Q17: What are ACID Properties?
+
+Transactions must follow ACID to ensure data integrity:
+
+1.  **Atomicity**: All or Nothing (if one step fails, everything rolls back).
+2.  **Consistency**: Database moves from one valid state to another.
+3.  **Isolation**: Transactions don't interfere with each other.
+4.  **Durability**: Once saved, data is permanent even if power fails.
+
 ---
 
-## 4. Logical & HR Questions
+## 4. DevOps & Git
 
-### Q13: Explain SOLID Principles (Briefly).
+### Q18: Merge vs Rebase?
+
+- **Merge**: Combines branches and creates a "Merge Commit". Preserves history exactly as it happened. Safer.
+- **Rebase**: Moves your branch changes to the tip of the master branch. Creates a linear history (cleaner look) but re-writes history. Dangerous on shared branches.
+
+---
+
+## 5. Logical & HR Questions
+
+### Q19: Explain SOLID Principles (Briefly).
 
 - **S**ingle Responsibility: A class should do one thing.
 - **O**pen/Closed: Open for extension, closed for modification.
@@ -112,6 +151,6 @@ A structure that speeds up data retrieval (like a book index).
 - **I**nterface Segregation: Detailed interfaces are better than one big general interface.
 - **D**ependency Inversion: Depend on abstractions, not concretions (Use Interfaces!).
 
-### Q14: How do you handle Exceptions?
+### Q20: How do you handle Exceptions?
 
 "I use `try-catch` blocks. In Web API, I prefer a **Global Exception Handler Middleware** to catch all errors in one place and return a standardized 500 Error response, logging the details to a file or database."
